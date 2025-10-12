@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	protovalidate "buf.build/go/protovalidate"
@@ -20,6 +21,10 @@ type serviceHandler struct {
 
 func (sh *serviceHandler) HelloWorld(ctx context.Context, request *service.HelloWorldRequest) (*service.HelloWorldResponse, error) {
 	if err := protovalidate.Validate(request); err != nil {
+		var validationError *protovalidate.ValidationError
+		if errors.As(err, &validationError) {
+
+		}
 		return nil, status.Errorf(codes.InvalidArgument, "Validation error: %v", err)
 	}
 	// panic(errors.New("Pointer nil"))
