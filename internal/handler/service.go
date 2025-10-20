@@ -7,9 +7,8 @@ import (
 
 	protovalidate "buf.build/go/protovalidate"
 	"github.com/feriadiansah/go-grpc-ecommerce-be/internal/utils"
+	"github.com/feriadiansah/go-grpc-ecommerce-be/pb/common"
 	"github.com/feriadiansah/go-grpc-ecommerce-be/pb/service"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
 //	type IServiceHandler interface{
@@ -24,8 +23,23 @@ func (sh *serviceHandler) HelloWorld(ctx context.Context, request *service.Hello
 		var validationError *protovalidate.ValidationError
 		if errors.As(err, &validationError) {
 
+			var validationErrorResponse []*common.ValidationError = make([]*common.ValidationError, 0)
+			for _, violation := range validationError.Violations {
+				validationErrorResponse = append(validationErrorResponse, &common.ValidationError{
+					Field:   *violation.Proto.Field.Elements[0].FieldName,
+					Message: *violation.Proto.Message,
+				})
+			}
+			return &service.HelloWorldResponse{
+				Base: &common.BaseResponse{
+					ValidationErrors: validationErrorResponse,
+					StatusCode:       400,
+					Message:          "Validation Error",
+					IsError:          true,
+				},
+			}, nil
 		}
-		return nil, status.Errorf(codes.InvalidArgument, "Validation error: %v", err)
+		return nil, err
 	}
 	// panic(errors.New("Pointer nil"))
 	return &service.HelloWorldResponse{

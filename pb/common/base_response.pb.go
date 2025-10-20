@@ -74,13 +74,13 @@ func (x *ValidationError) GetMessage() string {
 }
 
 type BaseResponse struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	StatusCode      int64                  `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code,omitempty"`
-	Message         string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	IsError         bool                   `protobuf:"varint,3,opt,name=is_error,json=isError,proto3" json:"is_error,omitempty"`
-	ValidationError []*ValidationError     `protobuf:"bytes,4,rep,name=validation_error,json=validationError,proto3" json:"validation_error,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	StatusCode       int64                  `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code,omitempty"`
+	Message          string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	IsError          bool                   `protobuf:"varint,3,opt,name=is_error,json=isError,proto3" json:"is_error,omitempty"`
+	ValidationErrors []*ValidationError     `protobuf:"bytes,4,rep,name=validation_errors,json=validationErrors,proto3" json:"validation_errors,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *BaseResponse) Reset() {
@@ -134,9 +134,9 @@ func (x *BaseResponse) GetIsError() bool {
 	return false
 }
 
-func (x *BaseResponse) GetValidationError() []*ValidationError {
+func (x *BaseResponse) GetValidationErrors() []*ValidationError {
 	if x != nil {
-		return x.ValidationError
+		return x.ValidationErrors
 	}
 	return nil
 }
@@ -148,13 +148,13 @@ const file_common_base_response_proto_rawDesc = "" +
 	"\x1acommon/base_response.proto\x12\x06common\"A\n" +
 	"\x0fValidationError\x12\x14\n" +
 	"\x05field\x18\x01 \x01(\tR\x05field\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"\xa8\x01\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\xaa\x01\n" +
 	"\fBaseResponse\x12\x1f\n" +
 	"\vstatus_code\x18\x01 \x01(\x03R\n" +
 	"statusCode\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x12\x19\n" +
-	"\bis_error\x18\x03 \x01(\bR\aisError\x12B\n" +
-	"\x10validation_error\x18\x04 \x03(\v2\x17.common.ValidationErrorR\x0fvalidationErrorB8Z6github.com/feriadiansah/go-grpc-ecommerce-be/pb/commonb\x06proto3"
+	"\bis_error\x18\x03 \x01(\bR\aisError\x12D\n" +
+	"\x11validation_errors\x18\x04 \x03(\v2\x17.common.ValidationErrorR\x10validationErrorsB8Z6github.com/feriadiansah/go-grpc-ecommerce-be/pb/commonb\x06proto3"
 
 var (
 	file_common_base_response_proto_rawDescOnce sync.Once
@@ -174,7 +174,7 @@ var file_common_base_response_proto_goTypes = []any{
 	(*BaseResponse)(nil),    // 1: common.BaseResponse
 }
 var file_common_base_response_proto_depIdxs = []int32{
-	0, // 0: common.BaseResponse.validation_error:type_name -> common.ValidationError
+	0, // 0: common.BaseResponse.validation_errors:type_name -> common.ValidationError
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
